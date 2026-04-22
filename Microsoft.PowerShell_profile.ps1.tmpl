@@ -31,6 +31,11 @@ if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
     }
 }
 
+# Initialize mise
+if (Get-Command "mise" -ErrorAction SilentlyContinue) {
+    Invoke-Expression (&mise activate powershell)
+}
+
 # Function to lazy-load modules on first use
 function Import-ModuleLazy {
     param(

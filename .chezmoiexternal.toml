@@ -13,12 +13,6 @@
     executable = true
     refreshPeriod = "168h"
 
-[".local/bin/direnv"]
-    type = "file"
-    url = "https://github.com/direnv/direnv/releases/latest/download/direnv.{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
-    executable = true
-    refreshPeriod = "168h"
-
 [".local/bin/aws-vault"]
     type = "file"
     url = "https://github.com/99designs/aws-vault/releases/latest/download/aws-vault-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
@@ -32,13 +26,6 @@
     refreshPeriod = "168h"
     path = "aws-nuke"
 
-# Terraform version manager
-[".local/bin/tfenv"]
-    type = "archive"
-    url = "https://github.com/tfutils/tfenv/archive/refs/heads/master.zip"
-    refreshPeriod = "168h"
-    stripComponents = 1
-
 # WSL-specific tools (WSL currently only runs on x86_64, but arch is parameterized for correctness)
 [".local/bin/host-spawn"]
     type = "file"
@@ -46,13 +33,12 @@
     executable = true
     refreshPeriod = "168h"
 
-# Modern ls replacement
-[".local/bin/eza"]
-    type = "archive-file"
-    url = "https://github.com/eza-community/eza/releases/latest/download/eza_{{ if eq .chezmoi.arch `amd64` }}x86_64{{ else }}aarch64{{ end }}-unknown-linux-gnu.tar.gz"
+# mise cross-platform tool manager
+[".local/bin/mise"]
+    type = "file"
+    url = "https://mise.jdx.dev/mise-latest-linux-{{ if eq .chezmoi.arch `amd64` }}x64{{ else }}arm64{{ end }}"
     executable = true
     refreshPeriod = "168h"
-    path = "./eza"
 
 # Themes and appearance
 [".poshthemes"]
@@ -109,6 +95,9 @@
 [".poshthemes"]
     type = "archive"
     url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip"
+    refreshPeriod = "168h"
+    exact = true
+{{- end }}h-my-posh/releases/latest/download/themes.zip"
     refreshPeriod = "168h"
     exact = true
 {{- end }}

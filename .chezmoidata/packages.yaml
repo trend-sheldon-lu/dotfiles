@@ -1,19 +1,11 @@
 packages:
   darwin:
     brews:
+      - mise
       - git
       - curl
       - jandedobbeleer/oh-my-posh/oh-my-posh
-      - direnv
       - powershell
-      - eza
-      - fzf
-      - bat
-      - zoxide
-      - jq
-      - ncdu
-      - ansible
-      - ansible-lint
     casks:
       - obsidian
       - font-caskaydia-cove-nerd-font
@@ -24,25 +16,14 @@ packages:
       - curl
       - bash
       - zsh
-      - bat
-      - zoxide
       - unzip
-      - jq
-      - ncdu
-      - awscli
       - code
     apts:
       - git
       - curl
       - bash
       - zsh
-      - bat
-      - zoxide
       - unzip
-      - jq
-      - ncdu
-      - direnv
-      - awscli
       - code
     flatpak:
       - com.bitwarden.desktop
@@ -68,6 +49,7 @@ packages:
        - PsReadLine
        - Get-WHOIS
      winget:
+       - jdx.mise
        - JanDeDobbeleer.OhMyPosh
        - Git.Git
        - Microsoft.PowerShell
@@ -76,7 +58,6 @@ packages:
        - Obsidian.Obsidian
        - OpenWhisperSystems.Signal
        - Greenshot.Greenshot
-       - Warrensbox.TerraformSwitcher
      msstore:
      pmode:
         winget:
@@ -90,7 +71,6 @@ packages:
           - Plex.Plex
           - Synology.SynologyDriveClient
           - Tailscale.Tailscale
-          - OpenJS.NodeJS.LTS
           - TheDocumentFoundation.LibreOffice
      ptxmode:
         winget:

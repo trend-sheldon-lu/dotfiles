@@ -122,9 +122,9 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# tfenv setup
-if [ -d "$HOME/.local/bin/tfenv" ] ; then
-    PATH="$HOME/.local/bin/tfenv/bin:$PATH"
+# Initialize mise
+if command -v mise >/dev/null 2>&1; then
+    eval "$(mise activate bash)"
 fi
 
 {{- if or .pmode .oagmode }}

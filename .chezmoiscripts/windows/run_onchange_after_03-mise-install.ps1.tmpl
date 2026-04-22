@@ -1,0 +1,8 @@
+# hash: {{ include "dot_mise.toml.tmpl" | sha256sum }}
+
+if (Get-Command "mise" -ErrorAction SilentlyContinue) {
+    Write-Host "[-] Installing/Updating tools via mise [-]" -ForegroundColor Green
+    mise install -y
+} else {
+    Write-Host "[!] mise is not installed, skipping tool installation." -ForegroundColor Yellow
+}
