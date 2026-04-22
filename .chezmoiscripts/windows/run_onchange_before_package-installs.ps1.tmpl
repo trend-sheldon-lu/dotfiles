@@ -18,9 +18,9 @@ function Install-WingetPackage {
 
 # Install PowerShell modules
 {{ range .packages.windows.powershell -}}
-if (-not (Get-InstalledPSResource {{ . | quote }} -ErrorAction SilentlyContinue)) {
+if (-not (Get-Module {{ . | quote }} -ListAvailable -ErrorAction SilentlyContinue)) {
     Write-Host "Installing PS module: {{ . }}..." -ForegroundColor Yellow
-    Install-PSResource {{ . | quote }} -Scope CurrentUser -TrustRepository
+    Install-Module {{ . | quote }} -Scope CurrentUser -Force -SkipPublisherCheck
 } else {
     Write-Host "PS module already installed: {{ . }}" -ForegroundColor Green
 }
@@ -54,10 +54,11 @@ Install-WingetPackage -Id {{ . | quote }} -Source "msstore"
 {{ end -}}
 
 {{ range .extensions.windows.vscode -}}
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 # Check if codeium is installed and create alias for code
-if (Get-Command codeium -ErrorAction SilentlyContinue) {
-    Write-Host "Codeium found. Creating alias for code..." -ForegroundColor Yellow
-    Set-Alias -Name code -Value codeium -Scope CurrentUser -Force
+if (Get-Command codium -ErrorAction SilentlyContinue) {
+    Write-Host "Codium found. Creating alias for code..." -ForegroundColor Yellow
+    Set-Alias -Name code -Value codium -Scope CurrentUser -Force
 }
 if (-not (code --list-extensions | Select-String -SimpleMatch {{ . | quote }})) {
     Write-Host "Installing VS Code extension: {{ . }}..." -ForegroundColor Yellow
