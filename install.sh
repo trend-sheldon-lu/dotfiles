@@ -38,7 +38,7 @@ else
     chezmoi=chezmoi
 fi
 
-echo "Initializing dotfiles from locus313/dotfiles..."
+echo "Initializing dotfiles from trend-sheldon-lu/dotfiles..."
 
 # Replace current process with chezmoi init
-exec "$chezmoi" init --apply locus313
+exec "$chezmoi" init --apply trend-sheldon-lu

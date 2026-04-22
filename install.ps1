@@ -59,9 +59,9 @@ foreach ($tool in $requiredTools) {
 # Refresh PATH environment variable
 $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH","User")
 
-Write-Host "Initializing dotfiles from locus313/dotfiles..." -ForegroundColor Green
+Write-Host "Initializing dotfiles from dotfiles..." -ForegroundColor Green
 try {
-    chezmoi init --apply locus313
+    chezmoi init --apply trend-sheldon-lu
     Write-Host "Dotfiles installation completed successfully!" -ForegroundColor Green
 }
 catch {
