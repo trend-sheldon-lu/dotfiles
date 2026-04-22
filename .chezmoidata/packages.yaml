@@ -31,17 +31,12 @@ packages:
       - com.github.tchx84.Flatseal
       - com.gitlab.davem.ClamTk
       - com.makemkv.MakeMKV
-      - com.synology.SynologyDrive
-      - com.valvesoftware.Steam
       - dev.deedles.Trayscale
       - io.missioncenter.MissionCenter
       - md.obsidian.Obsidian
       - org.flameshot.Flameshot
       - org.gnome.Loupe
-      - net.thunderbird.Thunderbird
-      - org.remmina.Remmina
       - org.videolan.VLC
-      - tv.plex.PlexDesktop
   windows:
      powershell:
        - Posh-Git
@@ -53,34 +48,31 @@ packages:
        - JanDeDobbeleer.OhMyPosh
        - Git.Git
        - Microsoft.PowerShell
-       - Microsoft.VisualStudioCode
        - twpayne.chezmoi
        - Obsidian.Obsidian
-       - OpenWhisperSystems.Signal
        - Greenshot.Greenshot
+       - Notepad++.Notepad++
+       - SagerNet.sing-box
+       - Microsoft.WindowsTerminal
+       - JamesCJ60.Universalx86TuningUtility
+       - hluk.CopyQ
+       - valinet.ExplorerPatcher.Prerelease
+       - Zen-Team.Zen-Browser
+       - mcmilk.7zip-zstd-ndm
      msstore:
+       - 9P7KNL5RWT25
+       - XP89DCGQ3K6VLD
      pmode:
         winget:
           - Bitwarden.CLI
           - Bitwarden.Bitwarden
-          - Mozilla.Firefox
-          - Discord.Discord
           - Valve.Steam
-          - xpipe-io.xpipe
           - GuinpinSoft.MakeMKV
-          - Plex.Plex
-          - Synology.SynologyDriveClient
           - Tailscale.Tailscale
-          - TheDocumentFoundation.LibreOffice
      ptxmode:
         winget:
           - 1password-cli
-          - Microsoft.AzureCLI
-          - xpipe-io.xpipe
-          - Amazon.AWSCLI
-          - Amazon.SessionManagerPlugin
           - TablePlus.TablePlus
-          - TheDocumentFoundation.LibreOffice
           - Postman.Postman
      oagmode:
         winget:
@@ -107,8 +99,6 @@ extensions:
       - arturbelico.code-sum-up
       - mkhl.direnv
       - eamodio.gitlens
-      - hashicorp.terraform
-      - GitHub.copilot
       - timonwong.shellcheck
       - emmanuelbeziat.vscode-great-icons
       - redhat.vscode-xml
@@ -121,9 +111,7 @@ extensions:
       - codezombiech.gitignore
       - fnando.linter
       - github.copilot-chat
-      - hashicorp.terraform
       - mhutchie.git-graph
-      - ms-azuretools.vscode-containers
       - ms-python.debugpy
       - ms-python.python
       - ms-python.vscode-pylance
