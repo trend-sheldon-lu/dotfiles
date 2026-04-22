@@ -69,7 +69,7 @@ packages:
           - Bitwarden.CLI
           - Bitwarden.Bitwarden
           - Valve.Steam
-          - GuinpinSoft.MakeMKV
+          - RadolynLabs.AyuGramDesktop
           - Tailscale.Tailscale
      ptxmode:
         winget:
