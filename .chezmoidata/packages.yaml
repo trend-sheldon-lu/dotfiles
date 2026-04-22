@@ -56,9 +56,11 @@ packages:
        - Microsoft.WindowsTerminal
        - JamesCJ60.Universalx86TuningUtility
        - hluk.CopyQ
-       - valinet.ExplorerPatcher.Prerelease
+       #- valinet.ExplorerPatcher.Prerelease
        - Zen-Team.Zen-Browser
        - mcmilk.7zip-zstd-ndm
+       - BillStewart.SyncthingWindowsSetup
+       - MoonlightGameStreamingProject.Moonlight
      msstore:
        - 9P7KNL5RWT25
        - XP89DCGQ3K6VLD
