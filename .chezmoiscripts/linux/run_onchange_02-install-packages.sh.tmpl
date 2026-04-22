@@ -54,6 +54,16 @@ fi
 
 {{- if not .wsl }}
 echo "[-] Installing VS Code extensions [-]"
+# Check if codeium is installed
+if command -v codeium &> /dev/null
+then
+    # Create alias for code
+    alias code="codeium"
+    echo 'alias code="codeium"' >> ~/.bashrc
+    echo 'alias code="codeium"' >> ~/.zshrc
+    echo 'Alias for code points to codeium has been added.'
+fi
+
 {{ range .extensions.linux.vscode }}
 if ! code --list-extensions | grep -q {{ . | quote }}; then
     echo "Installing extension {{ . }}..."
