@@ -61,6 +61,7 @@ packages:
        - mcmilk.7zip-zstd-ndm
        - BillStewart.SyncthingWindowsSetup
        - MoonlightGameStreamingProject.Moonlight
+       - WinMerge.WinMerge
      msstore:
        - 9P7KNL5RWT25
        - XP89DCGQ3K6VLD
