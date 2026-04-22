@@ -53,13 +53,14 @@ Install-WingetPackage -Id {{ . | quote }}
 Install-WingetPackage -Id {{ . | quote }} -Source "msstore"
 {{ end -}}
 
-{{ range .extensions.windows.vscode -}}
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 # Check if codeium is installed and create alias for code
 if (Get-Command codium -ErrorAction SilentlyContinue) {
     Write-Host "Codium found. Creating alias for code..." -ForegroundColor Yellow
     Set-Alias -Name code -Value codium -Scope CurrentUser -Force
 }
+
+{{ range .extensions.windows.vscode -}}
 if (-not (code --list-extensions | Select-String -SimpleMatch {{ . | quote }})) {
     Write-Host "Installing VS Code extension: {{ . }}..." -ForegroundColor Yellow
     code --force --install-extension {{ . | quote }}
