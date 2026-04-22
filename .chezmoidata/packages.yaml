@@ -50,7 +50,7 @@ packages:
        - Microsoft.PowerShell
        - twpayne.chezmoi
        - Obsidian.Obsidian
-       - Greenshot.Greenshot
+       - VSCodium.VSCodium
        - Notepad++.Notepad++
        - SagerNet.sing-box
        - Microsoft.WindowsTerminal
