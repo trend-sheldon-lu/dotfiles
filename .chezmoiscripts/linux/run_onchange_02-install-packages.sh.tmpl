@@ -40,6 +40,22 @@ fi
 {{ end -}}
 {{- end }}
 
+{{- if (eq .chezmoi.osRelease.id "arch" "manjaro" "endeavouros" "cachyos") }}
+echo "[-] Installing packages using Pacman (Arch-based/CachyOS) [-]"
+{{ range .packages.linux.pacmans -}}
+{{- if and (eq . "code") $.wsl }}
+echo "Skipping {{ . }} on WSL (use VS Code on Windows host with WSL extension)"
+{{- else }}
+if ! pacman -Qs {{ . | quote }} >/dev/null 2>&1; then
+    echo "Installing {{ . }}..."
+    sudo pacman -S --noconfirm {{ . | quote }}
+else
+    echo "{{ . }} is already installed"
+fi
+{{- end }}
+{{ end -}}
+{{- end }}
+
 {{- if (eq .chezmoi.osRelease.id "fedora" "pop") }}
 echo "[-] Installing Flatpak applications [-]"
 {{ range .packages.linux.flatpak -}}

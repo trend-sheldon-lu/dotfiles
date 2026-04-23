@@ -66,5 +66,13 @@ echo "Skipping VS Code repository setup on WSL (use VS Code on Windows host with
 
 {{- end }}
 
+{{- if (eq .chezmoi.osRelease.id "arch" "manjaro" "endeavouros" "cachyos") }}
+echo "[-] Setting up repositories for Arch-based Linux (including CachyOS) [-]"
+# No specific external repositories needed for basic packages as 'code' is in [extra]
+# and other packages are in standard repositories.
+# We just ensure the package database is up to date.
+sudo pacman -Sy --noconfirm
+{{- end }}
+
 echo "[-] Repository setup completed [-]"
 {{ end -}}

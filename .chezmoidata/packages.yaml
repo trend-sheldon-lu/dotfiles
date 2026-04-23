@@ -25,6 +25,13 @@ packages:
       - zsh
       - unzip
       - code
+    pacmans:
+      - git
+      - curl
+      - bash
+      - zsh
+      - unzip
+      - code
     flatpak:
       - com.bitwarden.desktop
       - com.discordapp.Discord

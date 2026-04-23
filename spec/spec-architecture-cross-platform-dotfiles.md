@@ -60,7 +60,7 @@ This specification defines the architecture, requirements, and operational patte
 
 - **PLT-001**: Windows installations MUST support both PowerShell 5.1 and PowerShell 7+
 - **PLT-002**: WSL environments MUST integrate with Windows OpenSSH for git operations
-- **PLT-003**: Linux installations MUST support multiple package managers (apt for Debian/Ubuntu/Pop, dnf for Fedora/AlmaLinux) and Flatpak for desktop application packages
+- **PLT-003**: Linux installations MUST support multiple package managers (apt for Debian/Ubuntu/Pop, dnf for Fedora/AlmaLinux, pacman for Arch/Manjaro/EndeavourOS/CachyOS) and Flatpak for desktop application packages
 - **PLT-004**: macOS installations MUST integrate with Homebrew package manager
 
 ### Template Requirements
@@ -117,6 +117,7 @@ packages:
   linux:
     apts: [...]           # APT package names (Debian/Ubuntu/Pop)
     dnfs: [...]           # DNF package names (Fedora/AlmaLinux)
+    pacmans: [...]        # Pacman package names (Arch/Manjaro/EndeavourOS)
     flatpak: [...]        # Flatpak application IDs
   windows:
     powershell: [...]     # PowerShell module names (PSResource)
