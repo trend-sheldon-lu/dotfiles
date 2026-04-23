@@ -1,72 +1,119 @@
 {{ if eq .chezmoi.os "windows" -}}
 $ErrorActionPreference = 'Continue'
 
-# Helper: install a winget package only if not already present
-function Install-WingetPackage {
-    param(
-        [string]$Id,
-        [string]$Source = "winget"
-    )
-    winget list --id $Id -e --accept-source-agreements | Out-Null
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "Already installed: $Id" -ForegroundColor Green
-    } else {
-        Write-Host "Installing: $Id..." -ForegroundColor Yellow
-        winget install --source $Source --accept-package-agreements --uninstall-previous $Id
-    }
-}
+$dscConfigPath = Join-Path $env:TEMP "chezmoi-winget-config.yaml"
 
-# Install PowerShell modules
-{{ range .packages.windows.powershell -}}
-if (-not (Get-Module {{ . | quote }} -ListAvailable -ErrorAction SilentlyContinue)) {
-    Write-Host "Installing PS module: {{ . }}..." -ForegroundColor Yellow
-    Install-Module {{ . | quote }} -Scope CurrentUser -Force -SkipPublisherCheck
-} else {
-    Write-Host "PS module already installed: {{ . }}" -ForegroundColor Green
-}
-{{ end -}}
+@"
+# yaml-language-server: `$schema=https://aka.ms/configuration-dsc-schema/0.3
+`$schema: https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/2023/08/config/document.json
+metadata:
+  winget:
+    processor:
+      identifier: "dscv3"
+resources:
+{{- range .packages.windows.winget }}
+  - name: winget_{{ . }}
+    type: Microsoft.WinGet/Package
+    properties:
+      id: {{ . | quote }}
+      source: "winget"
+{{- end }}
 
-# Core winget packages
-{{ range .packages.windows.winget -}}
-Install-WingetPackage -Id {{ . | quote }}
-{{ end -}}
+{{- if hasKey . "ptxmode" }}
+{{- if eq .ptxmode true }}
+{{- range .packages.windows.ptxmode.winget }}
+  - name: winget_{{ . }}
+    type: Microsoft.WinGet/Package
+    properties:
+      id: {{ . | quote }}
+      source: "winget"
+{{- end }}
+{{- end }}
+{{- end }}
 
-{{ if eq .ptxmode true }}
-{{ range .packages.windows.ptxmode.winget -}}
-Install-WingetPackage -Id {{ . | quote }}
-{{ end -}}
-{{ end }}
+{{- if hasKey . "pmode" }}
+{{- if eq .pmode true }}
+{{- range .packages.windows.pmode.winget }}
+  - name: winget_{{ . }}
+    type: Microsoft.WinGet/Package
+    properties:
+      id: {{ . | quote }}
+      source: "winget"
+{{- end }}
+{{- end }}
+{{- end }}
 
-{{ if eq .pmode true }}
-{{ range .packages.windows.pmode.winget -}}
-Install-WingetPackage -Id {{ . | quote }}
-{{ end -}}
-{{ end }}
+{{- if hasKey . "oagmode" }}
+{{- if eq .oagmode true }}
+{{- range .packages.windows.oagmode.winget }}
+  - name: winget_{{ . }}
+    type: Microsoft.WinGet/Package
+    properties:
+      id: {{ . | quote }}
+      source: "winget"
+{{- end }}
+{{- end }}
+{{- end }}
 
-{{ if eq .oagmode true }}
-{{ range .packages.windows.oagmode.winget -}}
-Install-WingetPackage -Id {{ . | quote }}
-{{ end -}}
-{{ end }}
+{{- range .packages.windows.msstore }}
+  - name: msstore_{{ . }}
+    type: Microsoft.WinGet/Package
+    properties:
+      id: {{ . | quote }}
+      source: "msstore"
+{{- end }}
 
-{{ range .packages.windows.msstore -}}
-Install-WingetPackage -Id {{ . | quote }} -Source "msstore"
-{{ end -}}
+{{- range .packages.windows.powershell }}
+  - name: psmodule_{{ . }}
+    type: Microsoft.PowerShell.PSResourceGet/PSResource
+    settings:
+      Name: {{ . | quote }}
+      Ensure: "Present"
+{{- end }}
+
+  - name: VSCodium_Extensions
+    type: PSDscResources/Script
+    dependsOn:
+      - winget_VSCodium.VSCodium
+    settings:
+      TestScript: |
+        `$required = @(
+{{- range .extensions.windows.vscode }}
+          {{ . | quote }},
+{{- end }}
+          ""
+        ) | Where-Object { `$_.Trim() -ne "" }
+        `$installed = codium --list-extensions
+        foreach (`$id in `$required) {
+            if (`$id -notin `$installed) { return `$false }
+        }
+        return `$true
+      SetScript: |
+        `$required = @(
+{{- range .extensions.windows.vscode }}
+          {{ . | quote }},
+{{- end }}
+          ""
+        ) | Where-Object { `$_.Trim() -ne "" }
+        `$installed = codium --list-extensions
+        foreach (`$id in `$required) {
+            if (`$id -notin `$installed) {
+                Write-Host "Installing extension: `$id"
+                codium --install-extension `$id --force
+            }
+        }
+      GetScript: |
+        return @{ Result = "VSCodium Extensions Management" }
+"@ | Out-File -FilePath $dscConfigPath -Encoding utf8
+
+Write-Host "Applying WinGet DSC configuration..." -ForegroundColor Yellow
+winget configure --file $dscConfigPath --accept-configuration-agreements
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-# Check if codeium is installed and create alias for code
+# Check if codium is installed and create alias for code
 if (Get-Command codium -ErrorAction SilentlyContinue) {
     Write-Host "Codium found. Creating alias for code..." -ForegroundColor Yellow
     Set-Alias -Name code -Value codium -Scope Local -Force
 }
-
-{{ range .extensions.windows.vscode -}}
-if (-not (code --list-extensions | Select-String -SimpleMatch {{ . | quote }})) {
-    Write-Host "Installing VS Code extension: {{ . }}..." -ForegroundColor Yellow
-    code --force --install-extension {{ . | quote }}
-} else {
-    Write-Host "VS Code extension already installed: {{ . }}" -ForegroundColor Green
-}
-{{ end -}}
 
 {{ end -}}
